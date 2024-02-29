@@ -13,6 +13,7 @@ import (
 
 func AuthMiddleware(authService auth.Service, userService service.ServiceUser) gin.HandlerFunc {
 	return func(c *gin.Context) {
+
 		authHeader := c.GetHeader("Authorization")
 		if !strings.Contains(authHeader, "Bearer") {
 			response := helper.APIresponse(http.StatusUnauthorized, nil)
