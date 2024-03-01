@@ -22,9 +22,10 @@ func StartApp() {
 
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
-		AllowAllOrigins: true,
-		AllowHeaders:    []string{"Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Origin , Accept , X-Requested-With , Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization"},
-		AllowMethods:    []string{"POST, OPTIONS, GET, PUT, DELETE"},
+		AllowOrigins:     []string{"*", "http://localhost:5173", "https://6yd68t.csb.app"},
+		AllowHeaders:     []string{"X-Requested-with, Content-Type, Authorization, Access-Control-Allow-Origin"},
+		AllowMethods:     []string{"POST, OPTIONS, GET, PUT, DELETE, OPTIONS"},
+		AllowCredentials: true,
 	}))
 
 	// user
