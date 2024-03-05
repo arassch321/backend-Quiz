@@ -104,3 +104,18 @@ func (h *quizHandler) UpdatedQuiz(c *gin.Context) {
 	response := helper.SuccessfulResponse1(createQuiz)
 	c.JSON(http.StatusOK, response)
 }
+
+func (h *quizHandler) GetQuizByID(c *gin.Context) {
+	param := c.Param("id")
+	params, _ := strconv.Atoi(param)
+
+	quiz, err := h.quizService.GetQuizByID(params)
+	if err != nil {
+		response := helper.FailedResponse1(http.StatusUnprocessableEntity, err.Error(), quiz)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	response := helper.SuccessfulResponse1(quiz)
+	c.JSON(http.StatusOK, response)
+}

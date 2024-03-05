@@ -47,7 +47,6 @@ func (r *question_repository) DeletedQuestionById(question *models.Question) (*m
 	if err != nil {
 		return question, err
 	}
-
 	return question, nil
 }
 

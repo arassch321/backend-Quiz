@@ -13,6 +13,7 @@ type ServiceQuiz interface {
 	UpdatedQuiz(ID int, input dto.UpdatedQuizDto) (*models.Quiz, error)
 	DeletedQuiz(ID int) (*models.Quiz, error)
 	IsQuizActive() ([]*models.Quiz, error)
+	GetQuizByID(quizID int) (*models.Quiz, error)
 }
 
 type quiz_service struct {
@@ -95,4 +96,12 @@ func (s *quiz_service) UpdatedQuiz(ID int, input dto.UpdatedQuizDto) (*models.Qu
 		return quizing, err
 	}
 	return quizing, nil
+}
+
+func (s *quiz_service) GetQuizByID(quizID int) (*models.Quiz, error) {
+	quiz, err := s.repository_quiz.GetQuizByID(quizID)
+	if err != nil {
+		return nil, err
+	}
+	return quiz, nil
 }

@@ -49,6 +49,7 @@ func StartApp() {
 	quiz.PUT("/updated-quiz/:id", middleware.AuthMiddleware(authService, userService), middleware.AuthRole(authService, userService), quizHandler.UpdatedQuiz)
 	quiz.GET("/", middleware.AuthMiddleware(authService, userService), quizHandler.GetAllQuiz)
 	quiz.GET("/is-active", middleware.AuthMiddleware(authService, userService), quizHandler.IsQuizActive)
+	quiz.GET("/:id", middleware.AuthMiddleware(authService, userService), quizHandler.GetQuizByID)
 	quiz.DELETE("/:id", middleware.AuthMiddleware(authService, userService), middleware.AuthRole(authService, userService), quizHandler.DeletedQuiz)
 
 	//question
@@ -60,6 +61,7 @@ func StartApp() {
 	question.POST("/created-question/:id", middleware.AuthMiddleware(authService, userService), middleware.AuthRole(authService, userService), questionHandler.AddQuestionsToQuizHandler)
 	question.GET("/questions/:quiz_id", questionHandler.GetAllQuestionsByQuizIDHandler)
 	question.GET("/:question_id", questionHandler.GetQuestionByIDHandler)
+	question.DELETE("/:question_id", middleware.AuthMiddleware(authService, userService), middleware.AuthRole(authService, userService), questionHandler.DeleteQuestionByIDHandler)
 
 	//student
 	studentAnswerRepository := repository.NewStudentAnswerRepository(db)
@@ -72,6 +74,11 @@ func StartApp() {
 
 	studentAnswer.GET("/api/user/quiz/:quizID/total-score", middleware.AuthMiddleware(authService, userService), studentAnswerHandler.GetTotalScoreHandler)
 
-	// Port
+	// certFile := "/etc/letsencrypt/live/api-quiz-arras.my.id/fullchain.pem"
+	// keyFile := "/etc/letsencrypt/live/api-quiz-arras.my.id/privkey.pem"
+
+	// // Mulai server HTTPS dengan sertifikat dan kunci yang diberikan
+	// router.RunTLS(":443", certFile, keyFile)
+
 	router.Run(":8080")
 }

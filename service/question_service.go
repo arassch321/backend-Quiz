@@ -12,6 +12,7 @@ type ServiceQuestion interface {
 	AddQuestionsToQuiz(quizID int, questions []dto.CreatedQuestionDto) (*models.Quiz, error)
 	GetQuestionsByQuizID(quizID int) ([]*models.Question, error)
 	GetQuestionByID(questionID int) (*models.Question, error)
+	DeleteQuestionByID(questionID int) (*models.Question, error)
 }
 
 type question_service struct {
@@ -67,6 +68,20 @@ func (s *question_service) AddQuestionsToQuiz(quizID int, questions []dto.Create
 
 func (s *question_service) GetQuestionByID(questionID int) (*models.Question, error) {
 	question, err := s.repository_question.GetQuestionByID(questionID)
+	if err != nil {
+		return nil, err
+	}
+
+	return question, nil
+}
+
+func (s *question_service) DeleteQuestionByID(questionID int) (*models.Question, error) {
+	question, err := s.repository_question.GetQuestionByID(questionID)
+	if err != nil {
+		return nil, err
+	}
+
+	question, err = s.repository_question.DeletedQuestionById(question)
 	if err != nil {
 		return nil, err
 	}

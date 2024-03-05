@@ -10,7 +10,7 @@ type Quiz struct {
 	FinishedAt  time.Time
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-	Questions   []Question
+	Questions   []Question `gorm:"constraint:OnDelete:CASCADE"`
 }
 
 type Question struct {
@@ -18,8 +18,8 @@ type Question struct {
 	QuizID         int
 	Question       string
 	TrueAnswer     string
-	Options        string // Opsi jawaban
-	StudentAnswers []StudentAnswer
+	Options        string
+	StudentAnswers []StudentAnswer `gorm:"constraint:OnDelete:CASCADE"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
 }
